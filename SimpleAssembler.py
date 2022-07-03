@@ -26,16 +26,16 @@ def var(B,j,beg,pc):
     es="line"+str(j+1)
     #print(c)
     if(beg!=0):
-        # sys.stdout.write(es)
-        # sys.stdout.write("\n")
+        sys.stdout.write("Variable not declared in the beginning")
+        sys.stdout.write("\n")
         return 0,D
     elif(len(c)==2 and(c[0]!=c[1])):
         #print("Valid")
         D.append(c[1])
         return 1,D
     else:
-        # sys.stdout.write(es)
-        # sys.stdout.write("\n")
+        sys.stdout.write("Invalid syntax for variable")
+        sys.stdout.write("\n")
         return 0,D
 def typeA(B,j,pc): 
     c=B[j].split()
@@ -72,8 +72,8 @@ def typeA(B,j,pc):
             sys.stdout.write("\n")
         return 1
     else:
-        # sys.stdout.write(es)
-        # sys.stdout.write("\n")
+        sys.stdout.write("Invalid syntax for "+c[0])
+        sys.stdout.write("\n")
         return 0
 def typeB(B,j,pc):
     c=B[j].split()
@@ -85,8 +85,8 @@ def typeB(B,j,pc):
             st=c[2][1:]
             for e in st:
                 if e not in intg:
-                    # sys.stdout.write(es)
-                    # sys.stdout.write("\n")
+                    sys.stdout.write("Invalid immediate value")
+                    sys.stdout.write("\n")
                     return 0
             ps=bin(int(st))
             sz=ps[2:]
@@ -98,8 +98,8 @@ def typeB(B,j,pc):
             if c[1] in dcr.keys():
                 last=dcr[c[1]]+last
             else:
-                # sys.stdout.write(es)
-                # sys.stdout.write("\n")
+                sys.stdout.write("Invalid Register"+c[1])
+                sys.stdout.write("\n")
                 return 0
             last=dc["movI"]+last
             if(pc==1):
@@ -107,10 +107,12 @@ def typeB(B,j,pc):
                 sys.stdout.write("\n")
             return 1
         else:
-            # sys.stdout.write(es)
-            # sys.stdout.write("\n")
+            sys.stdout.write("Invalid Syntax for c[0])
+            sys.stdout.write("\n")
             return 0
     else:
+        sys.stdout.write("Invalid Syntax for c[0])
+        sys.stdout.write("\n")
         return 0
 
             
@@ -123,22 +125,22 @@ def typeC(B,j,pc):
         if c[1] in dcr.keys():
             s=s+dcr[c[1]]
         else:
-            # sys.stdout.write(es)
-            # sys.stdout.write("\n")
+            sys.stdout.write("Invalid Register"+c[1])
+            sys.stdout.write("\n")
             return 0
         if c[2] in dcr.keys():
             s=s+dcr[c[2]]
         else:
-            # sys.stdout.write(es)
-            # sys.stdout.write("\n")
+            sys.stdout.write("Invalid Register"+c[2])
+            sys.stdout.write("\n")
             return 0
         if(pc==1):
             sys.stdout.write(s)
             sys.stdout.write("\n")
         return 1
     else:
-        # sys.stdout.write(es)
-        # sys.stdout.write("\n")
+        sys.stdout.write("Invalid Syntax for c[0])
+        sys.stdout.write("\n")
         return 0
 
 def typeD(B,j,D,pc):
@@ -150,19 +152,19 @@ def typeD(B,j,D,pc):
         if c[1] in dcr:
             st=st+dcr[c[1]]
         else:
-            # sys.stdout.write(es)
-            # sys.stdout.write("\n")
+            sys.stdout.write("Invalid Register "+c[1])
+            sys.stdout.write("\n")
             return 0
         if c[2] in D:
 
             return 1
         else:
-            # sys.stdout.write(es)
-            # sys.stdout.write("\n")
+            sys.stdout.write("Invalid Register "+c[1])# sys.stdout.write(es)
+            sys.stdout.write("\n")
             return 0
     else:
-        # sys.stdout.write(es)
-        # sys.stdout.write("\n")
+        sys.stdout.write("Invalid Syntax for c[0])
+        sys.stdout.write("\n")
         return 0
 def dp(B,j,dcv):
     dc,dcr=dict()
@@ -185,8 +187,8 @@ def typeE(B,j,D,pc):
         if c[1] in D:
             return 1
         else:
-            # sys.stdout.write(es)
-            # sys.stdout.write("\n")
+            sys.stdout.write("Invalid Variable "+c[1])
+            sys.stdout.write("\n")
             return 0
 def ef(B,j,dcv):
     dc,dcr=dict()
@@ -214,8 +216,8 @@ def typeF(B,j,D,pc):
             sys.stdout.write("\n")
         return 1
     else:
-        # sys.stdout.write(es)
-        # sys.stdout.write("\n")
+        sys.stdout.write("Invalid syntax for hlt")
+        sys.stdout.write("\n")
         return 0
 def movR(B,j,D,pc):
     c=B[j].split()
@@ -225,8 +227,8 @@ def movR(B,j,D,pc):
     if c[1] in dcr:
         st = st + dcr[c[1]]
     else:
-        # sys.stdout.write(es)
-        # sys.stdout.write("\n")
+        sys.stdout.write("Invalid Register "+c[1])
+        sys.stdout.write("\n")
         return 0
     if c[2] in dcr:
         st = st + dcr[c[2]]
@@ -236,8 +238,8 @@ def movR(B,j,D,pc):
             
         return 1
     else:
-        # sys.stdout.write(es)
-        # sys.stdout.write("\n")
+        sys.stdout.write("Invalid Register "+c[1])
+        sys.stdout.write("\n")
         return 0
 r=0
 d = list()
@@ -276,7 +278,7 @@ for j in range(len(B)):
     elif(y[0]=="add" or y[0]=="sub" or y[0]=="mul" or y[0]=="xor" or y[0]=="or" or y[0]=="and"):
         r=typeA(B,j,pc)
         beg+=1
-    elif(y[0]=="mov" or y[0]=="ls"):
+    elif(y[0]=="mov" or y[0]=="ls" or y[0]=="rs"):
         r=typeB(B,j,pc)
         beg+=1
     elif(y[0]=="div" or y[0]=="not" or y[0]=="cmp"):
