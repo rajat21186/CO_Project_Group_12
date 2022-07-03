@@ -90,6 +90,9 @@ def typeB(B,j,pc):
                     return 0
             ps=bin(int(st))
             sz=ps[2:]
+            if(len(sz>8)):
+                sys.stdout.write("Size of immediate value exceeds 8 bits")
+                sys.stdout.write("\n")
             last=""
             for u in range(8-len(sz)):
                 last=last+"0"
@@ -107,11 +110,11 @@ def typeB(B,j,pc):
                 sys.stdout.write("\n")
             return 1
         else:
-            sys.stdout.write("Invalid Syntax for c[0])
+            sys.stdout.write("Invalid Syntax for "+c[0])
             sys.stdout.write("\n")
             return 0
     else:
-        sys.stdout.write("Invalid Syntax for c[0])
+        sys.stdout.write("Invalid Syntax for "+c[0])
         sys.stdout.write("\n")
         return 0
 
@@ -139,7 +142,7 @@ def typeC(B,j,pc):
             sys.stdout.write("\n")
         return 1
     else:
-        sys.stdout.write("Invalid Syntax for c[0])
+        sys.stdout.write("Invalid Syntax for "+c[0])
         sys.stdout.write("\n")
         return 0
 
@@ -149,7 +152,7 @@ def typeD(B,j,D,pc):
     dc,dcr=dict()
     st=dc[c[0]]
     if(len(c)==3):
-        if c[1] in dcr:
+        if c[1] in dcr.keys():
             st=st+dcr[c[1]]
         else:
             sys.stdout.write("Invalid Register "+c[1])
@@ -159,11 +162,11 @@ def typeD(B,j,D,pc):
 
             return 1
         else:
-            sys.stdout.write("Invalid Register "+c[1])# sys.stdout.write(es)
+            sys.stdout.write("Invalid Variable "+c[2])# sys.stdout.write(es)
             sys.stdout.write("\n")
             return 0
     else:
-        sys.stdout.write("Invalid Syntax for c[0])
+        sys.stdout.write("Invalid Syntax for "+c[0])
         sys.stdout.write("\n")
         return 0
 def dp(B,j,dcv):
