@@ -90,9 +90,10 @@ def typeB(B,j,pc):
                     return 0
             ps=bin(int(st))
             sz=ps[2:]
-            if(len(sz>8)):
+            if(len(str(sz))>8):
                 sys.stdout.write("Size of immediate value exceeds 8 bits")
                 sys.stdout.write("\n")
+                return 0
             last=""
             for u in range(8-len(sz)):
                 last=last+"0"
@@ -110,12 +111,14 @@ def typeB(B,j,pc):
                 sys.stdout.write("\n")
             return 1
         else:
-            sys.stdout.write("Invalid Syntax for "+c[0])
-            sys.stdout.write("\n")
+            if(c[0]!="mov"):
+                sys.stdout.write("Invalid Syntax for "+c[0])
+                sys.stdout.write("\n")
             return 0
     else:
-        sys.stdout.write("Invalid Syntax for "+c[0])
-        sys.stdout.write("\n")
+        if(c[0]!="mov"):
+            sys.stdout.write("Invalid Syntax for "+c[0])
+            sys.stdout.write("\n")
         return 0
 
             
