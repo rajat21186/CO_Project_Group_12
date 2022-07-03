@@ -308,8 +308,10 @@ for j in range(len(B)):
             sr = sr + y[p] + " "
             p += 1
         if (p > 0):
-            sr = sr + y[p]
 
+            sr = sr + y[p]
+        if(len(y) == 1 and y[0] == "hlt"):
+            sr = sr + "hlt"
         
         B[j] = sr
         fn = 0
@@ -328,7 +330,7 @@ for j in range(len(B)):
         #print(B)
         cl = 1
         z = B[j].split()
-        if(len(z) == 1):
+        if(len(z) == 1 and z[0] != "hlt"):
             r = 0
             sys.stdout.write("line"+str(j + 1))
             sys.stdout.write("\n")
@@ -467,4 +469,6 @@ if(r==1):
             
 
         
+            
+
             
