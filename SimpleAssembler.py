@@ -1,4 +1,4 @@
-#CO PROJECT
+#CO PROJECT Gp12
 import sys
 #with open("test1.txt","r") as f:
 A = sys.stdin.readlines()
