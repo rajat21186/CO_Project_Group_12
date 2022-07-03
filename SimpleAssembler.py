@@ -315,7 +315,7 @@ for j in range(len(B)):
         fn = 0
         for t in B:
             if(t==""):
-                sys.stdout.write("line" + str(j + 1) + " Invalid Syntax")
+                sys.stdout.write("line" + str(j + 1))
                 sys.stdout.write("\n")
                 r = 0
                 fn = 1
@@ -330,7 +330,7 @@ for j in range(len(B)):
         z = B[j].split()
         if(len(z) == 1):
             r = 0
-            sys.stdout.write("line"+str(j + 1) + " Invalid Syntax")
+            sys.stdout.write("line"+str(j + 1))
             sys.stdout.write("\n")
         else:
             if(len(z)==0):
@@ -365,7 +365,7 @@ for j in range(len(B)):
                 r = movR(B,j,D,pc)
             lp  = 1    
             if(r == 0):
-                sys.stdout.write("line" + str(j + 1) + " Invalid Syntax")
+                sys.stdout.write("line" + str(j + 1))
                 sys.stdout.write("\n")
                 
 
@@ -381,7 +381,7 @@ for j in range(len(B)):
             r = 0
             break
     if(r == 0 and lp == 0):
-        sys.stdout.write("line" + str(j + 1) + " Invalid Syntax")
+        sys.stdout.write("line" + str(j + 1))
         sys.stdout.write("\n")
         
     if(r==0):
