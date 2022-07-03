@@ -25,16 +25,16 @@ def var(B,j,beg,pc):
     es="line"+str(j+1)
     #print(c)
     if(beg!=0):
-        sys.stdout.write(es)
-        sys.stdout.write("\n")
+        # sys.stdout.write(es)
+        # sys.stdout.write("\n")
         return 0,D
     elif(len(c)==2 and(c[0]!=c[1])):
         #print("Valid")
         D.append(c[1])
         return 1,D
     else:
-        sys.stdout.write(es)
-        sys.stdout.write("\n")
+        # sys.stdout.write(es)
+        # sys.stdout.write("\n")
         return 0,D
 def typeA(B,j,pc): 
     c=B[j].split()
@@ -71,8 +71,8 @@ def typeA(B,j,pc):
             sys.stdout.write("\n")
         return 1
     else:
-        sys.stdout.write(es)
-        sys.stdout.write("\n")
+        # sys.stdout.write(es)
+        # sys.stdout.write("\n")
         return 0
 def typeB(B,j,pc):
     c=B[j].split()
@@ -84,8 +84,8 @@ def typeB(B,j,pc):
             st=c[2][1:]
             for e in st:
                 if e not in intg:
-                    sys.stdout.write(es)
-                    sys.stdout.write("\n")
+                    # sys.stdout.write(es)
+                    # sys.stdout.write("\n")
                     return 0
             ps=bin(int(st))
             sz=ps[2:]
@@ -97,8 +97,8 @@ def typeB(B,j,pc):
             if c[1] in dcr.keys():
                 last=dcr[c[1]]+last
             else:
-                sys.stdout.write(es)
-                sys.stdout.write("\n")
+                # sys.stdout.write(es)
+                # sys.stdout.write("\n")
                 return 0
             last=dc["movI"]+last
             if(pc==1):
@@ -106,9 +106,13 @@ def typeB(B,j,pc):
                 sys.stdout.write("\n")
             return 1
         else:
-            sys.stdout.write(es)
-            sys.stdout.write("\n")
+            # sys.stdout.write(es)
+            # sys.stdout.write("\n")
             return 0
+    else:
+        return 0
+
+            
 def typeC(B,j,pc):
     c=B[j].split()
     es="line"+str(j+1)
@@ -118,23 +122,24 @@ def typeC(B,j,pc):
         if c[1] in dcr.keys():
             s=s+dcr[c[1]]
         else:
-            sys.stdout.write(es)
-            sys.stdout.write("\n")
+            # sys.stdout.write(es)
+            # sys.stdout.write("\n")
             return 0
         if c[2] in dcr.keys():
             s=s+dcr[c[2]]
         else:
-            sys.stdout.write(es)
-            sys.stdout.write("\n")
+            # sys.stdout.write(es)
+            # sys.stdout.write("\n")
             return 0
         if(pc==1):
             sys.stdout.write(s)
             sys.stdout.write("\n")
         return 1
     else:
-        sys.stdout.write(es)
-        sys.stdout.write("\n")
+        # sys.stdout.write(es)
+        # sys.stdout.write("\n")
         return 0
+
 def typeD(B,j,D,pc):
     c=B[j].split()
     es="line"+str(j+1)
@@ -144,35 +149,58 @@ def typeD(B,j,D,pc):
         if c[1] in dcr:
             st=st+dcr[c[1]]
         else:
-            sys.stdout.write(es)
-            sys.stdout.write("\n")
+            # sys.stdout.write(es)
+            # sys.stdout.write("\n")
             return 0
         if c[2] in D:
+
             return 1
         else:
-            sys.stdout.write(es)
-            sys.stdout.write("\n")
+            # sys.stdout.write(es)
+            # sys.stdout.write("\n")
             return 0
     else:
-        sys.stdout.write(es)
-        sys.stdout.write("\n")
+        # sys.stdout.write(es)
+        # sys.stdout.write("\n")
         return 0
-def typeE(B,j,pc):
+def dp(B,j,dcv):
+    dc,dcr=dict()
+    c=B[j].split()
+    q = dcv[c[2]]
+    S = ""
+    for v in range(8-len(q)):
+        S = S + "0"
+    S = S + q
+    st = dc[c[0]] + dcr[c[1]] + S
+    sys.stdout.write(st)
+    sys.stdout.write("\n")
+    return 1
+def typeE(B,j,D,pc):
     c=B[j].split()
     es="line"+str(j+1)
     dc,dcr=dict()
-    st=dc[c[0]]+"000"
+    st=dc[c[0]]+"000" 
     if(len(c)==2):
         if c[1] in D:
-            st=st+dcv[c[1]]
-            if(pc==1):
-                sys.stdout.write(st)
-                sys.stdout.write("\n")
             return 1
         else:
-            sys.stdout.write(es)
-            sys.stdout.write("\n")
+            # sys.stdout.write(es)
+            # sys.stdout.write("\n")
             return 0
+def ef(B,j,dcv):
+    dc,dcr=dict()
+    c=B[j].split()
+    q = dcv[c[1]]
+    S = ""
+    for v in range(8-len(q)):
+        S = S + "0"
+    S = S + q
+    st=dc[c[0]]+"000"
+    st = st + S
+    sys.stdout.write(st)
+    sys.stdout.write("\n")
+    return 1
+
 def typeF(B,j,D,pc):
     c=B[j].split()
     es="line"+str(j+1)
@@ -185,13 +213,54 @@ def typeF(B,j,D,pc):
             sys.stdout.write("\n")
         return 1
     else:
-        sys.stdout.write(es)
-        sys.stdout.write("\n")
+        # sys.stdout.write(es)
+        # sys.stdout.write("\n")
+        return 0
+def movR(B,j,D,pc):
+    c=B[j].split()
+    es="line"+str(j+1)
+    dc,dcr=dict()
+    st = dc["movR"] + "00000"
+    if c[1] in dcr:
+        st = st + dcr[c[1]]
+    else:
+        # sys.stdout.write(es)
+        # sys.stdout.write("\n")
+        return 0
+    if c[2] in dcr:
+        st = st + dcr[c[2]]
+        if(pc == 1):
+            sys.stdout.write(st)
+            sys.stdout.write("\n")
+            
+        return 1
+    else:
+        # sys.stdout.write(es)
+        # sys.stdout.write("\n")
         return 0
 r=0
+d = list()
+
 #print(B)
 for j in range(len(B)):
+    lp = 0
+    #k = B[j]
+    # R = 0
+    # for m in range(len(k) - 1):
+    #     if(k[m] == " " and k[m+1] == " "):
+    #         sys.stdout.write("line" + str(j + 1))
+    #         sys.stdout.write("\n")
+    #         R = 1
+            
+    #         break
+
+    # if(R == 1):
+    #     r = 0
+    #     break
     y=B[j].split()
+    
+    #sys.stdout.write(str(j))
+    #sys.stdout.write("\n")
     #print(y)
     pc=0
     ch=0
@@ -220,8 +289,6 @@ for j in range(len(B)):
         beg+=1
     elif(y[0]=="hlt"):
         r=typeF(B,j,D,pc)
-    
-    
     elif(lc == ":" and cl == 0):
         a = len(y[0])
         y.pop(0)
@@ -231,13 +298,30 @@ for j in range(len(B)):
         while(p < len(y) - 1):
             sr = sr + y[p] + " "
             p += 1
-        sr = sr + y[p]
+        if (p > 0):
+            sr = sr + y[p]
+
+        
         B[j] = sr
+        fn = 0
+        for t in B:
+            if(t==""):
+                sys.stdout.write("line" + str(j + 1) + " Invalid Syntax")
+                sys.stdout.write("\n")
+                r = 0
+                fn = 1
+
+                break
+                #B.remove(t)
+        if (fn == 1):
+            break    
+
+        #print(B)
         cl = 1
         z = B[j].split()
         if(len(z) == 1):
             r = 0
-            sys.stdout.write("line"+str(j + 1))
+            sys.stdout.write("line"+str(j + 1) + " Invalid Syntax")
             sys.stdout.write("\n")
         else:
             if(len(z)==0):
@@ -263,16 +347,38 @@ for j in range(len(B)):
                 beg+=1
             elif(z[0]=="hlt"):
                 r=typeF(B,j,D,pc)
+            elif(len(y) == 3 and y[0] == "mov" and (y[1] in d) and (y[2] in d) ):
+                r = movR(B,j,D,pc)
+    
             else:
                 r = 0
-                print("line" + str(j + 1))
+            if(len(y) == 3 and y[0] == "mov" and  (y[1] in d) and (y[2] in d)):
+                r = movR(B,j,D,pc)
+            lp  = 1    
+            if(r == 0):
+                sys.stdout.write("line" + str(j + 1) + " Invalid Syntax")
+                sys.stdout.write("\n")
+                
 
     else:
-        r = 0  
-        print("line"+str(j + 1))
+        r = 0 
+
+    if(len(y) == 3 and y[0] == "mov" and (y[1] in d) and (y[2] in d)):
+        r = movR(B,j,D,pc)
+    if(j == len(B) - 1 and r == 1):
+        if(y[0] != "hlt"):
+            sys.stdout.write("Missing hlt")
+            sys.stdout.write("\n")
+            r = 0
+            break
+    if(r == 0 and lp == 0):
+        sys.stdout.write("line" + str(j + 1) + " Invalid Syntax")
+        sys.stdout.write("\n")
+        
     if(r==0):
         break
 if(r==1):
+    xy = list()
     d=len(D)
     b=len(B)
     ins=(b-d+1)
@@ -285,7 +391,11 @@ if(r==1):
     for j in range(len(B)):
         y=B[j].split()
         lc = y[0][-1]
-        if(len(y)==0):
+    
+        
+        if(len(y) == 3 and y[0] == "mov" and  (y[1] in xy) and (y[2] in xy)):
+            r = movR(B,j,D,pc)
+        elif(len(y)==0):
             r=1
             ch=1
         elif(y[0]=="var"):
@@ -298,11 +408,14 @@ if(r==1):
         elif(y[0]=="div" or y[0]=="not" or y[0]=="cmp"):
             r=typeC(B,j,pc)
         elif(y[0]=="ld" or y[0]=="st"):
-            r=typeD(B,j,D,pc)
+            r=dp(B,j,dcv)
         elif(y[0]=="jmp" or y[0]=="jlt" or y[0]=="jgt" or y[0]=="je"):
-            r=typeE(B,j,D,pc)
+            r=ef(B,j,dcv)
         elif(y[0]=="hlt"):
             r=typeF(B,j,D,pc)
+        elif(len(y) == 3 and y[0] == "mov" and  (y[1] in d) and (y[2] in d)):
+            r = movR(B,j,D,pc)
+        
         
         # elif(lc == ":"):
         #     a = len(y[0])
