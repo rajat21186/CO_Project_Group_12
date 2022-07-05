@@ -11,16 +11,16 @@ for t in B:
     #print(B)
 D=[] 
 dcv=dict()
+dcl=dict()
 def dict():
-    dcr={"R0":"000","R1":"001","R2":"010","R3":"011","R4":"100","R5":"101","R6":"110","FLAGS":"111"}
+    dcr={"R0":"000","R1":"001","R2":"010","R3":"011","R4":"100","R5":"101","R6":"110"}
     dc={"add":"10000","sub":"10001","movI":"10010","movR":"10011","ld":"10100","st":"10101","mul":"10110","div":"10111","rs":"11000","ls":"11001","xor":"11010","or":"11011","and":"11100","not":"11101","cmp":"11110","jmp":"11111","jlt":"01100","jgt":"01101","je":"01111","hlt":"01010"}
     return dc,dcr
 def list():
     d=[]
     for t in range(7):
         s="R"+str(t)
-        d.append(s)
-    d.append("FLAGS")
+        d.append(s)       
     return d
 def var(B,j,beg,pc):
     c=B[j].split()
@@ -185,22 +185,24 @@ def dp(B,j,dcv):
     sys.stdout.write(st)
     sys.stdout.write("\n")
     return 1
-def typeE(B,j,D,pc):
+def typeE(B,j,D,pc,dcl):
     c=B[j].split()
     es="line"+str(j+1)
     dc,dcr=dict()
     st=dc[c[0]]+"000" 
+    #print(dcl)
+    #print(c[1])
     if(len(c)==2):
-        if c[1] in D:
+        if c[1] in dcl.keys():
             return 1
         else:
-            sys.stdout.write("Invalid Variable "+c[1])
+            sys.stdout.write("Mentioned label not defined ")
             sys.stdout.write("\n")
             return 0
-def ef(B,j,dcv):
+def ef(B,j,dcv,dcl):
     dc,dcr=dict()
     c=B[j].split()
-    q = dcv[c[1]]
+    q = dcl[c[1]]
     S = ""
     for v in range(8-len(q)):
         S = S + "0"
@@ -227,19 +229,27 @@ def typeF(B,j,D,pc):
         sys.stdout.write("\n")
         return 0
 def movR(B,j,D,pc):
+    #print(pc)
     c=B[j].split()
     es="line"+str(j+1)
     dc,dcr=dict()
     st = dc["movR"] + "00000"
+    #print(c[1])
     if c[1] in dcr:
         st = st + dcr[c[1]]
+    elif c[1]=="FLAGS":
+        st=st+"111"
+        #print(st)
     else:
         sys.stdout.write("Invalid Register "+c[1])
         sys.stdout.write("\n")
         return 0
     if c[2] in dcr:
         st = st + dcr[c[2]]
+        #print("C1")
+        #print(pc)
         if(pc == 1):
+            #print("C2")
             sys.stdout.write(st)
             sys.stdout.write("\n")
             
@@ -268,7 +278,6 @@ for j in range(len(B)):
     #     r = 0
     #     break
     y=B[j].split()
-    
     #sys.stdout.write(str(j))
     #sys.stdout.write("\n")
     #print(y)
@@ -295,13 +304,13 @@ for j in range(len(B)):
         r=typeD(B,j,D,pc)
         beg+=1
     elif(y[0]=="jmp" or y[0]=="jlt" or y[0]=="jgt" or y[0]=="je"):
-        r=typeE(B,j,D,pc)
+        r=typeE(B,j,D,pc,dcl)
         beg+=1
     elif(y[0]=="hlt"):
         r=typeF(B,j,D,pc)
     elif(lc == ":" and cl == 0):
         a = len(y[0])
-        y.pop(0)
+        lst=y.pop(0)
         sr = ""
         p = 0
         #print(y)
@@ -370,12 +379,18 @@ for j in range(len(B)):
             if(r == 0):
                 sys.stdout.write("line" + str(j + 1))
                 sys.stdout.write("\n")
-                
+            else:
+                cl=""
+                for yz in range(len(lst)-1):
+                    cl=cl+lst[yz]
+                #print(cl)
+                dcl[cl]=str(bin(j+1)[2:])
+            
 
     else:
         r = 0 
 
-    if(len(y) == 3 and y[0] == "mov" and (y[1] in d) and (y[2] in d)):
+    if(len(y) == 3 and y[0] == "mov" and (y[1] in d or y[1]=="FLAGS") and (y[2] in d)):
         r = movR(B,j,D,pc)
     if(j == len(B) - 1 and r == 1):
         if(y[0] != "hlt"):
@@ -404,8 +419,8 @@ if(r==1):
         y=B[j].split()
         lc = y[0][-1]
     
-        
-        if(len(y) == 3 and y[0] == "mov" and  (y[1] in xy) and (y[2] in xy)):
+        #print(y)
+        if(len(y) == 3 and y[0] == "mov" and  (y[1] in xy or y[1]=="FLAGS") and (y[2] in xy)):
             r = movR(B,j,D,pc)
         elif(len(y)==0):
             r=1
@@ -422,11 +437,12 @@ if(r==1):
         elif(y[0]=="ld" or y[0]=="st"):
             r=dp(B,j,dcv)
         elif(y[0]=="jmp" or y[0]=="jlt" or y[0]=="jgt" or y[0]=="je"):
-            r=ef(B,j,dcv)
+            r=ef(B,j,dcv,dcl)
         elif(y[0]=="hlt"):
             r=typeF(B,j,D,pc)
-        elif(len(y) == 3 and y[0] == "mov" and  (y[1] in d) and (y[2] in d)):
-            r = movR(B,j,D,pc)
+        # elif(len(y) == 3 and y[0] == "mov" and  (y[1] in d or y[1]=="FLAGS") and (y[2] in d)):
+        #     print(pc)
+        #     r = movR(B,j,D,pc)
         
         
         # elif(lc == ":"):
