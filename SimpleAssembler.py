@@ -260,7 +260,7 @@ def movR(B,j,D,pc):
         return 0
 r=0
 d = list()
-
+linch=0
 #print(B)
 for j in range(len(B)):
     lp = 0
@@ -307,6 +307,13 @@ for j in range(len(B)):
         r=typeE(B,j,D,pc,dcl)
         beg+=1
     elif(y[0]=="hlt"):
+        if(j!=len(B)-1):
+            sys.stdout.write("hlt not at last line")
+            sys.stdout.write("\n")
+            sys.stdout.write("line"+str(j+1))
+            sys.stdout.write("\n")
+            r=0
+            break
         r=typeF(B,j,D,pc)
     elif(lc == ":" and cl == 0):
         a = len(y[0])
@@ -385,7 +392,13 @@ for j in range(len(B)):
                     cl=cl+lst[yz]
                 #print(cl)
                 dcl[cl]=str(bin(j+1)[2:])
-            
+                if cl in D:
+                    sys.stdout.write("Invalid name of Label")
+                    sys.stdout.write("\n")
+                    sys.stdout.write("line" + str(j + 1))
+                    sys.stdout.write("\n")
+                    r=0
+                    break
 
     else:
         r = 0 
@@ -394,7 +407,7 @@ for j in range(len(B)):
         r = movR(B,j,D,pc)
     if(j == len(B) - 1 and r == 1):
         if(y[0] != "hlt"):
-            sys.stdout.write("Missing hlt")
+            sys.stdout.write("hlt missing")
             sys.stdout.write("\n")
             r = 0
             break
@@ -404,8 +417,17 @@ for j in range(len(B)):
         
     if(r==0):
         break
+    #print(linch)
+    #print(B[linch-1])
+    if(linch==256 and B[linch-1]!="hlt"):
+        sys.stdout.write("code limit exceed")
+        sys.stdout.write("\n")
+        r=0
+        break
+    linch+=1
 if(r==1):
     xy = list()
+
     d=len(D)
     b=len(B)
     ins=(b-d+1)
@@ -482,6 +504,14 @@ if(r==1):
                 
                 
         
+        
+            
+
+        
+            
+
+
+
         
             
 
