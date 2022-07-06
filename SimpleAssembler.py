@@ -374,7 +374,7 @@ for j in range(len(B)):
                 r=typeD(B,j,D,pc)
                 beg+=1
             elif(z[0]=="jmp" or z[0]=="jlt" or z[0]=="jgt" or z[0]=="je"):
-                r=typeE(B,j,D,pc)
+                r=typeE(B,j,D,pc,dcl)
                 beg+=1
             elif(z[0]=="hlt"):
                 r=typeF(B,j,D,pc)
