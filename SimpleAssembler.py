@@ -106,7 +106,10 @@ def typeB(B,j,pc):
                 sys.stdout.write("Invalid Register"+c[1])
                 sys.stdout.write("\n")
                 return 0
-            last=dc[c[0]]+last
+            if(c[0]=="mov"):
+                last=dc["movI]+last
+            else:
+                last=dc[c[0]]+last
             if(pc==1):
                 sys.stdout.write(last)
                 sys.stdout.write("\n")
