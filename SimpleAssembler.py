@@ -107,7 +107,7 @@ def typeB(B,j,pc):
                 sys.stdout.write("\n")
                 return 0
             if(c[0]=="mov"):
-                last=dc["movI]+last
+                last=dc["movI"]+last
             else:
                 last=dc[c[0]]+last
             if(pc==1):
