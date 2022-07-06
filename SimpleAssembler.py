@@ -106,7 +106,7 @@ def typeB(B,j,pc):
                 sys.stdout.write("Invalid Register"+c[1])
                 sys.stdout.write("\n")
                 return 0
-            last=dc["movI"]+last
+            last=dc[c[0]]+last
             if(pc==1):
                 sys.stdout.write(last)
                 sys.stdout.write("\n")
@@ -361,7 +361,7 @@ for j in range(len(B)):
             elif(z[0]=="add" or z[0]=="sub" or z[0]=="mul" or z[0]=="xor" or z[0]=="or" or z[0]=="and"):
                 r=typeA(B,j,pc)
                 beg+=1
-            elif(z[0]=="mov" or z[0]=="ls"):
+            elif(z[0]=="mov" or z[0]=="ls" or z[0]=="rs"):
                 r=typeB(B,j,pc)
                 beg+=1
             elif(z[0]=="div" or z[0]=="not" or z[0]=="cmp"):
@@ -452,7 +452,7 @@ if(r==1):
             #print(D)
         elif(y[0]=="add" or y[0]=="sub" or y[0]=="mul" or y[0]=="xor" or y[0]=="or" or y[0]=="and"):
             r=typeA(B,j,pc)
-        elif(y[0]=="mov" or y[0]=="ls"):
+        elif(y[0]=="mov" or y[0]=="ls" or y[0]=="rs"):
             r=typeB(B,j,pc)
         elif(y[0]=="div" or y[0]=="not" or y[0]=="cmp"):
             r=typeC(B,j,pc)
