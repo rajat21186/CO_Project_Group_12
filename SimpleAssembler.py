@@ -433,9 +433,9 @@ if(r==1):
 
     d=len(D)
     b=len(B)
-    ins=(b-d+1)
+    ins=(b-d)
     for g in D:
-        jns=str(bin(ins+1))
+        jns=str(bin(ins))
         dcv[g]=jns[2:]
         ins+=1
     pc=1
